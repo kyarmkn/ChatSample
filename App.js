@@ -30,9 +30,9 @@ export default class DetailsScreen extends React.Component {
     this.query = firebase.firestore()
       .collection("messages")
       // 時系列に沿って表示（これがないと順番がバラバラになる）
-      .orderBy('createdAt', 'desc')
-      // 最新12個のメッセージのみを監視する制限
-      .limit(12);
+      .orderBy('createdAt', 'desc');
+    // 最新12個のメッセージのみを監視する制限
+    // .limit(12);
 
     // queryの更新時イベントにonCollectionUpdate登録
     this.unsubscribe = this.query.onSnapshot(this.onCollectionUpdate);
@@ -104,17 +104,19 @@ export default class DetailsScreen extends React.Component {
 
   render() {
     return (
-      <GiftedChat
-        messages={this.state.messages}
-        onSend={this.onSend}
-        user={{
-          _id: "user00001",
-          name: "user00001"
-        }}
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={this.onSend}
+          user={{
+            _id: "user00001",
+            name: "user00001"
+          }}
 
-        renderAvatarOnTop={true}
-        renderActions={this.renderCustomActions}
-      />
+          renderAvatarOnTop={true}
+          renderActions={this.renderCustomActions}
+        />
+      </View>
     );
   }
 
