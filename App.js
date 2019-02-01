@@ -4,12 +4,12 @@ import CustomActions from './CustomActions';
 import { GiftedChat } from 'react-native-gifted-chat';
 import firebase from 'react-native-firebase';
 
-export default class DetailsScreen extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.renderCustomActions = this.renderCustomActions.bind(this);
   }
-  state = { messages: [], currentMessageId: "" };
+  state = { messages: [] };
 
   // ログイン済だったらユーザー、未ログインだとnullが返される
   observeAuth = () =>
@@ -51,7 +51,6 @@ export default class DetailsScreen extends React.Component {
           tmpMessage.image = loadingImage
           return firebase.firestore().collection("messages").add(tmpMessage)
             .then(messageRef => {
-              console.log("ファイルパス？: ", message.image)
               filePath = 'chat/' + message._id + '.jpg'
               return firebase.storage().ref(filePath).putFile(message.image)
                 .then(uploadedImage => {
@@ -62,10 +61,11 @@ export default class DetailsScreen extends React.Component {
                 })
             });
         } else {
-          return firebase.firestore().collection("messages").add(message);
+          console.log("メッセージ", message)
+          return firebase.firestore().collection('messages').add(message);
         }
       } catch (error) {
-        console.error('Error writing new message to Firebase Database', error);
+        console.error('Firestoreに登録失敗.', error);
       }
     })
   }
@@ -78,26 +78,9 @@ export default class DetailsScreen extends React.Component {
   }
 
   renderCustomActions(props) {
-    if (Platform.OS === 'ios') {
-      return (
-        <CustomActions
-          {...props}
-        />
-      );
-    }
-    const options = {
-      'Action 1': (props) => {
-        alert('option 1');
-      },
-      'Action 2': (props) => {
-        alert('option 2');
-      },
-      'Cancel': () => { },
-    };
     return (
-      <Actions
+      <CustomActions
         {...props}
-        options={options}
       />
     );
   }
