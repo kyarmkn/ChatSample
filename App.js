@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, View } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import CustomActions from './CustomActions';
 import { GiftedChat } from 'react-native-gifted-chat';
 import firebase from 'react-native-firebase';
@@ -87,7 +87,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <SafeAreaView style={styles.safeArea}>
         <GiftedChat
           messages={this.state.messages}
           onSend={this.onSend}
@@ -99,7 +99,7 @@ export default class App extends React.Component {
           renderAvatarOnTop={true}
           renderActions={this.renderCustomActions}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 
@@ -108,29 +108,9 @@ export default class App extends React.Component {
   }
 }
 
-const styles = {
-  container: {
-    flex: 1
-  },
-  button: {
-    width: 25,
-    height: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    tintColor: 'tomato'
-  },
-  buttonContainer: {
-    padding: 10
-  },
-  customActionsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  loader: {
-    paddingTop: 20
-  },
-  sendLoader: {
-    marginRight: 10,
-    marginBottom: 10
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff'
   }
-};
+});
