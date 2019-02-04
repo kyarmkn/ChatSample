@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   View,
   ViewPropTypes,
-  Text
+  Text,
+  Platform,
+  PermissionsAndroid
 } from 'react-native';
 
 import CameraRollPicker from 'react-native-camera-roll-picker';
@@ -35,6 +37,22 @@ export default class CustomActions extends React.Component {
     this.setState({ modalVisible: visible });
   }
 
+  async requestCameraPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the camera roll');
+        this.setModalVisible(true)
+      } else {
+        console.log('Read storage rermission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
   onActionsPress() {
     const options = ['Choose From Library', 'Send Location', 'Cancel'];
     const cancelButtonIndex = options.length - 1;
@@ -45,7 +63,9 @@ export default class CustomActions extends React.Component {
       (buttonIndex) => {
         switch (buttonIndex) {
           case 0:
-            this.setModalVisible(true);
+            if (Platform.OS == "android") {
+              this.requestCameraPermission()
+            }
             break;
           case 1:
             navigator.geolocation.getCurrentPosition(

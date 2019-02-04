@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, Actions, Text, View, TouchableOpacity, Image } from 'react-native';
+import { PermissionsAndroid, Platform, View } from 'react-native';
 import CustomActions from './CustomActions';
 import { GiftedChat } from 'react-native-gifted-chat';
 import firebase from 'react-native-firebase';
