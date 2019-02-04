@@ -2,10 +2,8 @@
 
 アプリを実行するにはFirebaseの設定ファイルが必要です。
 
-- Android
-  - google-service.json
--iOS
-  - GoogleService-Info.plist
+- Android：google-service.json
+-iOS：GoogleService-Info.plist
 
 ### 設定ファイルの追加手順
 
