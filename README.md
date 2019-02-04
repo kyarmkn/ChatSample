@@ -4,7 +4,6 @@
 
 - Android
   - google-service.json
-
 -iOS
   - GoogleService-Info.plist
 
