@@ -65,6 +65,8 @@ export default class CustomActions extends React.Component {
           case 0:
             if (Platform.OS == "android") {
               this.requestCameraPermission()
+            } else {
+              this.setModalVisible(true)
             }
             break;
           case 1:
