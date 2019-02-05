@@ -14,7 +14,6 @@ export default class App extends React.Component {
   // ログイン済だったらユーザー、未ログインだとnullが返される
   observeAuth = () =>
     firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
-  // TODO: firebaseが認証を見つけたらすぐに呼び出されるって書いてあったけど意味がよく分からなかったので調べる
   onAuthStateChanged = user => {
     if (!user) {
       try {
@@ -46,15 +45,19 @@ export default class App extends React.Component {
     messages.forEach(message => {
       try {
         if (message.image != null) {
+          // 画像データ送信
+          // 先にローディング画像を仮置きして、Firestoreに追加
           loadingImage = "https://firebasestorage.googleapis.com/v0/b/chatappsample-76769.appspot.com/o/loading.png?alt=media&token=45d52053-8b74-41cd-94a3-cfddabc18778"
           tmpMessage = Object.assign({}, message);
           tmpMessage.image = loadingImage
           return firebase.firestore().collection("messages").add(tmpMessage)
             .then(messageRef => {
+              // Cloud Storageに画像を保存
               filePath = 'chat/' + message._id + '.jpg'
               return firebase.storage().ref(filePath).putFile(message.image)
                 .then(uploadedImage => {
                   console.log("ダウンロードURL: ", uploadedImage.downloadURL)
+                  // Cloud Storageに保存した画像のURLを、仮置き画像のURLと置き換える
                   return messageRef.update({
                     image: uploadedImage.downloadURL
                   });
