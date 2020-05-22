@@ -8,7 +8,7 @@
 ## 設定ファイルの追加手順
 
 1. Firebaseプロジェクト`ChatAppSample`を開く
-   1. Firebaseコンソール： `https://console.firebase.google.com/?hl=ja`
+   1. Firebaseコンソール： https://console.firebase.google.com/?hl=ja
 2. 左上の設定マーク（歯車マーク）から、「プロジェクトの設定」を選択
 3. 設定ページの全般タブの、「アプリ」の中から該当アプリを探す
    1. Android：com.chatsample
